@@ -6,11 +6,15 @@ function book(title, author, numPages, haveRead) {
     this.author = author
     this.numPages = numPages;
     this.haveRead = haveRead;
-
-    this.getInfo = function() {
-        return (this.title + " by " + this.author + ", " + numPages + " pages," + " " + this.haveRead);
-    }
 }
+
+
+
+/* this.getInfo = function() {
+        return (this.title + " by " + this.author + ", " + numPages + " pages," + " have read:" + this.haveRead);
+}
+*/
+
 
 function addBookToLibrary() {
 
@@ -26,4 +30,4 @@ function displayBooks(){
 
 }
 
-const b1 = new book("The Hunger Games", "Collins", 312, "read");
+const b1 = new book("The Hunger Games", "Collins", 312, true);
