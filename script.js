@@ -1,5 +1,16 @@
 let myLibrary = [];
 let bookCardsContainer = document.getElementsByClassName("bookCardsContainer")[0];
+let addNewBookButton = document.getElementById("addNewBookButton");
+let formPageBackground = document.getElementById("formPageBackground");
+
+//form stuff
+let exitFormButton = document.getElementById("exitFormButton");
+let submitButton = document.getElementById("submitButton");
+let titleField = document.getElementById("book_title");
+let authorField = document.getElementById("book_author");
+let pagesField = document.getElementById("num_pages");
+let yesReadSelection = document.getElementById("yes_read");
+
 function book(title, author, numPages, haveRead) {
     this.title = title;
     this.author = author
@@ -7,23 +18,15 @@ function book(title, author, numPages, haveRead) {
     this.haveRead = haveRead;
 }
 
-/* this.getInfo = function() {
-        return (this.title + " by " + this.author + ", " + numPages + " pages," + " have read:" + this.haveRead);
-}
-*/
-
-function addBookToLibrary() {
-
-    
-
+function clearDisplay() {
+    while (bookCardsContainer.firstChild) {
+        bookCardsContainer.removeChild(bookCardsContainer.firstChild);
+    }
 }
 
-const b1 = new book("The Hunger Games", "Collins", 312, true);
-const b2 = new book("Harry Potter", "J.K. Rowling", 312, false);
-myLibrary.push(b1);
-myLibrary.push(b2);
-
-function displayBooks(){
+function displayBooks() {
+    //first, wipe the current display
+    clearDisplay();
     //loop through all books in the book list
     for (let i = 0; i < myLibrary.length; i++) {
         //make the components of the card cells, add class to the values
@@ -71,7 +74,36 @@ function displayBooks(){
         //make the new card
         const newBookCard  = document.createElement("div");
         newBookCard.classList.add("bookCard");
-        newBookCard.setAttribute("id", i)
+
+        //create buttons
+        const removeBookButton = document.createElement("button");
+        removeBookButton.textContent = "X"
+        removeBookButton.classList.add("removeBookButton");
+        removeBookButton.setAttribute("id", i)
+        removeBookButton.addEventListener("click", function () {
+            myLibrary.splice(this.id, 1);
+            displayBooks();
+        });
+
+        const changeReadStatusButton = document.createElement("button");
+        changeReadStatusButton.textContent = "Toggle";
+        changeReadStatusButton.classList.add("readToggleButton");
+        changeReadStatusButton.setAttribute("data-index-number", i);
+        changeReadStatusButton.addEventListener("click", function() {
+            console.log(myLibrary[this.getAttribute("data-index-number")]);
+            if (myLibrary[this.getAttribute("data-index-number")].haveRead == "Yes") {
+                myLibrary[this.getAttribute("data-index-number")].haveRead = "No";
+            } else {
+                myLibrary[this.getAttribute("data-index-number")].haveRead = "Yes";
+            }
+            displayBooks();
+
+
+
+
+        })
+
+        
 
         //add components to cells
         titleCardCell.append(titleLabel, titleValue);
@@ -80,11 +112,51 @@ function displayBooks(){
         haveReadCardCell.append(haveReadLabel, haveReadValue);
 
         //add cells to card
-        newBookCard.append(titleCardCell, authorCardCell, numPagesCardCell, haveReadCardCell);
+        newBookCard.append(removeBookButton, titleCardCell, authorCardCell, numPagesCardCell, haveReadCardCell, changeReadStatusButton);
 
         //add to DOM
         bookCardsContainer.appendChild(newBookCard);
     }
 }
 
+//add functionality for buttons
+addNewBookButton.addEventListener("click", function () {
+    formPageBackground.style.display = "flex";
+})
+
+exitFormButton.addEventListener("click", function () {
+    formPageBackground.style.display = "none";
+})
+
+submitButton.addEventListener("click", function () {
+    formPageBackground.style.display = "none";
+
+    //Check to see if it has been read
+    let hasRead = "No";
+
+    if (yesReadSelection.checked) {
+        hasRead = "Yes";
+    }
+
+    const theBook = new book(titleField.value, authorField.value, pagesField.value, hasRead);
+    myLibrary.push(theBook);
+
+    displayBooks();
+})
+
+
+
+
+
+
+
+
+
+
+
+//Run the initial code
+const b1 = new book("The Hunger Games", "Collins", 312, "Yes");
+const b2 = new book("Harry Potter", "J.K. Rowling", 312, "No");
+myLibrary.push(b1);
+myLibrary.push(b2);
 displayBooks();

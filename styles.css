@@ -34,12 +34,16 @@
 
 #addNewBookButton {
     margin-left: auto;
+}
+
+button {
     padding: 10px;
     border: solid 2px black;
     background-color: antiquewhite;
+
 }
 
-#addNewBookButton:hover {
+button:hover {
     background-color: whitesmoke;
 }
 
@@ -51,8 +55,73 @@
     gap: 10px;
     border-left: solid 5px black;
     border-radius: 10px;
+    position: relative;
 }
 
 .bookCard:hover {
     box-shadow: 1px 1px 2px black;
+}
+
+
+
+
+
+#formPageBackground {
+
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.addNewBookForm {
+    width: 400px;
+    height: 200px;
+    background-color: antiquewhite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 10px black;
+    backdrop-filter: blur(5px);
+}
+
+.addNewBookForm ul {
+    list-style: none;
+}
+
+.addNewBookForm li {
+    padding: 5px;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100px;
+}
+
+#exitFormButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.removeBookButton {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    
+}
+
+.readToggleButton {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
 }
